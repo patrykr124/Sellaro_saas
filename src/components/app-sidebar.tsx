@@ -47,7 +47,7 @@ export function AppSidebar() {
     <Sidebar collapsible="icon" className="">
       <SidebarContent className="bg-background-gray-2">
         <SidebarGroup className="text-white">
-          <SidebarGroupLabel className="text-white mb-4 border-b-[0.1px] border-black/20">
+          <SidebarGroupLabel className="text-white mb-4 border-b-[0.1px] border-black/15">
             <Logo />
           </SidebarGroupLabel>
           <SidebarGroupContent>
