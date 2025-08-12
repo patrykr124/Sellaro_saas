@@ -1,4 +1,12 @@
-import { Bot, Home, Inbox, Search, Settings } from "lucide-react";
+import {
+  ArrowBigDown,
+  Bot,
+  ChevronDown,
+  Home,
+  Inbox,
+  Search,
+  Settings,
+} from "lucide-react";
 
 import {
   Sidebar,
@@ -9,9 +17,16 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarMenuSub,
+  SidebarMenuSubItem,
 } from "@/components/ui/sidebar";
 import Logo from "./ui/Logo";
 import Link from "next/link";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@radix-ui/react-collapsible";
 
 // Menu items.
 const items = [
@@ -26,9 +41,26 @@ const items = [
     icon: Inbox,
   },
   {
-    title: "Agent Ai",
-    url: "/dashboard/agent-ai",
+    title: "Agent AI",
+
     icon: Bot,
+    sub: [
+      {
+        id: 1,
+        title: "Customize",
+        url: "/dashboard/agent-ai/customize",
+      },
+      {
+        id: 2,
+        title: "Tuning",
+        url: "/dashboard/agent-ai/tunning",
+      },
+      {
+        id: 3,
+        title: "Setting",
+        url: "/dashboard/agent-ai/setting",
+      },
+    ],
   },
   {
     title: "Search",
@@ -53,16 +85,46 @@ export function AppSidebar() {
           <SidebarGroupContent>
             <SidebarMenu>
               {items.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
-                    <Link href={item.url}>
-                      <div className="">
-                        <item.icon size={20} />
-                      </div>
-                      <span>{item.title}</span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
+                <Collapsible key={item.title} className="group/collapsible">
+                  <SidebarMenuItem>
+                    <CollapsibleTrigger asChild>
+                      <SidebarMenuButton asChild>
+                        {item.url ? (
+                          <Link
+                            href={item.url}
+                            className="flex justify-between"
+                          >
+                            <span className="flex items-center gap-2">
+                              <item.icon size={18} />
+                              <span className="truncate">{item.title}</span>
+                            </span>
+                            <div className="">
+                              <ChevronDown size={14} />
+                            </div>
+                          </Link>
+                        ) : (
+                          <div className="flex items-center gap-2 justify-between w-full">
+                            <span className="flex items-center gap-2">
+                              <item.icon size={18} />
+                              <span className="truncate">{item.title}</span>
+                            </span>
+                            <ChevronDown size={14} />
+                          </div>
+                        )}
+                      </SidebarMenuButton>
+                    </CollapsibleTrigger>
+                    {item.sub &&
+                      item.sub.map((e) => (
+                        <CollapsibleContent key={e.id}>
+                          <Link href={e.url}>
+                            <SidebarMenuSub>
+                              <SidebarMenuSubItem>{e.title}</SidebarMenuSubItem>
+                            </SidebarMenuSub>
+                          </Link>
+                        </CollapsibleContent>
+                      ))}
+                  </SidebarMenuItem>
+                </Collapsible>
               ))}
             </SidebarMenu>
           </SidebarGroupContent>

@@ -4,9 +4,6 @@ import Recommended_chat from "./Recommended_chat";
 import Logo_chat from "./Logo_chat";
 import { useState } from "react";
 
-import { addDoc, collection, serverTimestamp } from "firebase/firestore";
-import { db } from "@/lib/firebase";
-
 export default function Footer_chat() {
   const [contentMessage, setContentMessage] = useState("");
   const [loading, setLoading] = useState(false);

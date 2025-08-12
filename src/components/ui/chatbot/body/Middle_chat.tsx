@@ -6,18 +6,25 @@ import { db } from "@/lib/firebase";
 
 import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import { useEffect, useRef, useState } from "react";
+import Loading from "./Loading";
 
 export default function Middle_chat() {
-  const [conntent, setConntent] = useState([]);
+  const [conntent, setConntent] = useState<message_chat_type[]>([]);
+  const [loadingAiConntent, setLoadingAiConntent] = useState(false);
   const autoScroll = useRef<HTMLDivElement>(null);
-
+  console.log(loadingAiConntent);
   useEffect(() => {
     const q = query(collection(db, "messages"), orderBy("createdAt"));
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
-      const msgs = querySnapshot.docs.map((doc) => ({
-        _id: doc.id,
-        ...doc.data(),
-      }));
+      const msgs = querySnapshot.docs.map((doc) => {
+        const data = doc.data();
+        return {
+          _id: doc.id,
+          content: data.content ?? "",
+          createdAt: data.createdAt ?? "",
+          role: data.role ?? "",
+        };
+      });
       setConntent(msgs);
     });
 
@@ -28,10 +35,20 @@ export default function Middle_chat() {
     if (autoScroll.current) {
       autoScroll.current.scrollTop = autoScroll.current.scrollHeight;
     }
+  }, [conntent, loadingAiConntent]);
+
+  useEffect(() => {
+    const lastContent = conntent[conntent.length - 1];
+    const aiConntent = lastContent && lastContent.role !== "ai";
+    if (aiConntent) {
+      setLoadingAiConntent(true);
+    } else {
+      setLoadingAiConntent(false);
+    }
   }, [conntent]);
 
   return (
-    <div ref={autoScroll} className="h-[550px] p-4 overflow-x-auto">
+    <div ref={autoScroll} className="h-[550px] p-4 overflow-x-auto space-y-2.5">
       {conntent.map((item: message_chat_type) => {
         return (
           <div
@@ -46,10 +63,11 @@ export default function Middle_chat() {
               ) : (
                 <p className="font-light text-sm mb-0.5">User</p>
               )}
+
               <p
                 className={`${
                   item.role === "ai"
-                    ? " bg-background-gray w-fit p-2.5 rounded-tl-md rounded-r-md  "
+                    ? " bg-background-gray w-fit p-2.5 rounded-tl-md rounded-r-md whitespace-pre-line "
                     : " border-[0.1px] border-black/15 w-fit p-2.5 rounded-tl-md rounded-r-md  "
                 }`}
               >
@@ -59,6 +77,7 @@ export default function Middle_chat() {
           </div>
         );
       })}
+      {loadingAiConntent && <Loading />}
     </div>
   );
 }

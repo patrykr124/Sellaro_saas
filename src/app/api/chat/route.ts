@@ -52,15 +52,3 @@ export async function POST(req: NextRequest) {
 
   return NextResponse.json({ status: "ok" });
 }
-
-// export async function GET() {
-//   const q = query(collection(db, "messages"), orderBy("createdAt"));
-//   const querySchanpshot = await getDocs(q);
-
-//   const content_messages = querySchanpshot.docs.map((doc) => ({
-//     _id: doc.id,
-//     ...doc.data(),
-//   }));
-
-//   return NextResponse.json(content_messages);
-// }
