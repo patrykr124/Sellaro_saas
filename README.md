@@ -1,25 +1,25 @@
-AI-Powered SaaS Chatbot for Websites
+<h1>AI-Powered SaaS Chatbot for Websites</h1>
 
 This project is a SaaS platform featuring a customizable AI chatbot designed for client websites.
 The chatbot can be fine-tuned and trained directly by the client, making it adaptable to specific business needs.
 
 Originally tailored for eCommerce stores, it helps increase conversions by:
 
-Recommending products based on customer needs
+  - Recommending products based on customer needs
 
-Sending direct links to relevant items
+  - Sending direct links to relevant items
 
-Comparing products in real time
+  - Comparing products in real time
 
 However, the chatbot is not limited to eCommerce — it can be implemented in various industries to provide personalized, AI-driven customer support.
 
 Key features:
 
-Client-side chatbot training and tuning
+  - Client-side chatbot training and tuning
 
-Real-time product comparison and recommendations
+  - Real-time product comparison and recommendations
 
-Link sharing for quick product navigation
+  - Link sharing for quick product navigation
 
 Flexible integration for multiple business types
 
